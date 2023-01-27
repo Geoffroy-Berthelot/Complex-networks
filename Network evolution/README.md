@@ -11,11 +11,13 @@ Please refer to the following articles for more information:
 The usage is straight-forward:
 1. modify the parameters in the 'main.m' file, and run it. The simulation will proceed and the results will be dumped in the /results folder.
 2. once you have your results ready, you can then run the 'build_results.m' file to build a MATLAB structure 'RES' (which is dumped as 'RES.mat' in the root directory). 
-This structure contains:
-- a $6 \times n$ array (with $n$ the total number of simulations) and with the following columns: [ $N_0$, $\beta$, $\gamma$, strategy, $\Delta$, topology] (see articles above for more information)
-- 
+This structure contains the following fields:
+- 'infos': a $n \times 6$ array (with $n$ the total number of simulations) and with the following columns: [ $N_0$, $\beta$, $\gamma$, strategy, $\Delta$, topology ] (see articles above for more information),
+- 'total_flux': the collection of total flux values $Q$ as numerical vectors for each simulation,
+- 'n_links': the collection of the number of links $L$ as numerical vectors for each siumulation
 
 A sample code for building a figure using RES.mat is provided below:
+
 
 
 A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice), 
