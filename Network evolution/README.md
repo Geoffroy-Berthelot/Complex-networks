@@ -63,7 +63,8 @@ ylabel('Q / Q_0');
 legend(hhh, 'random', 'pseudo-darwinian');
 ```
 
-Wich results in the following figure:
+Which results in the following figure:
+
 ![This is an image](../images/CN_Fig0.png)
 
 A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice), 
