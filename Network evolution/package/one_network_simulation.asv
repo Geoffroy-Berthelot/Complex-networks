@@ -1,0 +1,184 @@
+function R = one_network_simulation(T, N0, d, p_gamma, p_beta, S, is_mex, F)
+%performs one network simulation:
+%- construct the network
+%- evolve the network
+%- gather results
+
+%-----Build UCM graph:
+G = build_graph(T, N0, p_gamma);
+
+%-----Cast the adjacency matrix as an uint8 type (see 'INIT.m' for more explanations):
+G.adjm = uint8(G.adjm);
+
+%-----Assign distances between nodes:
+[G.dis_eucl] = get_distances(G.XY, G.adjm, p_beta); %Build distances impact according to beta
+
+%-----Assign distance between source and drain (sink):
+[G.inflow, G.outflow, distance_sinksource] = get_sink_source(G.adjm, d, F);
+
+if( distance_sinksource == -1 )
+    %sink / source may not be connected due to a failure in the linking
+    %algorithm (may occur with high gamma values)
+    R.is_warning = 1;
+    return
+else
+    if( distance_sinksource == -2 )
+        R.error_assign = 1;
+        warning('Could not assign source and drain nodes due to the requested \Delta value. Try to use a smaller \Delta value.');
+        return;
+    else
+        G.distance_SS = distance_sinksource;
+        G.is_warning = 0;
+    end
+end
+
+%push essential info about the network to the 'R' structure.
+G.n_nodes = N0;
+G.gamma = p_gamma;
+G.strategy = S;
+G.beta = p_beta;
+if(strcmp(T.topo, 'lattice') == 1)
+    G.config = 'lattice';
+else
+    G.config = 'scale-free';
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ATTACK THE NETWORK
+% (remove the weaskest links until there remains no flux between inflow and outflow)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+is_exit = 0;
+k = 1;
+
+R = {};
+RN = {};
+RL = {};
+while(1)
+
+    [G.Potentials, G.fluxes, is_warning] = get_flow(G, is_mex); %Compute the flow
+    
+    %===Gather statistics and figures data:
+    R = gather_evol_statistics(G, R, RN, RL, k);
+    
+    %tester la chaine finale. un réseaux en chaine tous degrés 2!
+    
+    %===Apply pruning strategy:
+    if( isempty(find(G.adjm)) )
+        keyboard;
+    end
+    
+    if( is_warning == 0 ) %isnan(G.distance_SS) ???
+        if( S == 0 )
+            [r, c] = pick_random_link( G.adjm ); %Remove random link
+        else
+            if( S == 1 )
+                try
+                    [r, c] = pick_weakest_link( G.fluxes ); %Remove weakest link
+                catch
+                    keyboard;
+                end
+            else
+                if( S == 2 )
+                    [r, c] = pick_strongest_link( G.fluxes ); %Remove strongest link
+                end
+            end
+        end
+        
+        % remove selected link:
+        [G, RL] = remove_link(G, r, c, F);
+        
+        % returns distance between source and sink
+        cur_dis = F(G.adjm, G.inflow, G.outflow);
+    end
+    
+    % clean network n'est pas bonne car elle laisse des noeuds seuls <=
+    % FAUX! c'est parce que je compare G avec G_temp!
+    % Distance_SS devrait être égal à -1 et pas à NaN!!!!
+    if(isnan(G.distance_SS))
+        keyboard;
+    end    
+    
+    %if(sum(sum(~isnan(G.fluxes),2)) == 0 || is_exit == 1 || cur_dis == -1 || G.is_warning == 1)
+    if(sum(sum(~isnan(G.fluxes),2)) == 0 || is_warning == 1 || cur_dis == -1)
+        %We stop because either:
+        % - no more fluxes are existing,
+        % - a warning was raised due to singular matrix (subgraphs)
+        % - is_exit flag is 'on'
+        % - the source and sink are disconnected
+        break; %we exit.
+    end
+    
+    [G, RN, is_exit] = clean_network(G, F); %then remove single nodes
+        
+    if(is_exit)
+        %we removed either the sink or source, or we "broke" the network thus we exit.
+        break;
+    end
+    
+    k=k+1;
+end
+
+
+
+
+
+
+
+%   [G.Potentials, G.fluxes, is_warning] = get_flow(G, is_mex); %Compute the flow
+%     
+%     %===Gather statistics and figures data:
+%     R = gather_evol_statistics(G, R, RN, RL, k);
+%     
+%     %===Apply pruning strategy:
+%     if( isempty(find(G.adjm)) )
+%         keyboard;
+%     end
+%     
+%     if( is_warning == 0 )
+%         if( S == 0 )
+%             [r, c, is_exit] = pick_random_link( G.adjm ); %Remove random link
+%         else
+%             if( S == 1 )
+%                 [r, c, is_exit] = pick_weakest_link( G.fluxes ); %Remove weakest link
+%             else
+%                 if( S == 2 )
+%                     [r, c, is_exit] = pick_strongest_link( G.fluxes ); %Remove strongest link
+%                 end
+%             end
+%         end
+% 
+%         if(is_exit == 0)
+%             % remove selected link:
+%             [G, RL] = remove_link(G, r, c, F);
+%         
+%             % returns distance between source and sink
+%             cur_dis = F(G.adjm, G.inflow, G.outflow);
+%         else
+%             keyboard;
+%             %il faut virer les is_exit puisque c'est que le is_warning qui
+%             %compte au final :)
+%             % mais est-ce que on ne devrait pas vérifier ==0 quand même ?
+%             % tester la chaine finale.
+%         end
+%     end
+%     
+%     %if(sum(sum(~isnan(G.fluxes),2)) == 0 || is_exit == 1 || cur_dis == -1 || G.is_warning == 1)
+%     if(sum(sum(~isnan(G.fluxes),2)) == 0 || is_exit == 1 || G.is_warning == 1)
+%         keyboard;
+%         %We stop because either:
+%         % - no more fluxes are existing,
+%         % - a warning was raised due to singular matrix (subgraphs)
+%         % - is_exit flag is 'on'
+%         % - the source and sink are disconnected
+%         break; %we exit.
+%     end
+%     
+%     [G, RN, is_exit] = clean_network(G, F); %then remove single nodes
+%     
+%     if(is_exit)
+%         %we removed either the sink or source, thus we exit.
+%         break;
+%     end
+%     
+%     k=k+1;
+
