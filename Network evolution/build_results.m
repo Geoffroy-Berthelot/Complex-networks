@@ -44,7 +44,7 @@ for k=3:n
     %Group by parameters:
     for ii=1:size(R,2) %(1) for the number of realizations
         %Build final index structure:
-        %[N_0, \beta, \gamma, strategy, \Delta, topology, pair number];
+        %[N_0, \beta, \gamma, strategy, \Delta, topology]
         A(ii, 1) = R{ii}.n_nodes;
         A(ii, 2) = R{ii}.beta;
         A(ii, 3) = R{ii}.gamma;
