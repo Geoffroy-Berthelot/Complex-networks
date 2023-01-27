@@ -64,7 +64,7 @@ legend(hhh, 'random', 'pseudo-darwinian');
 ```
 
 Wich results in the following figure:
-![This is an image](/../main/images/CN_Fig0.png)
+![This is an image](../blob/main/images/CN_Fig0.png)
 
 
 A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice), 
