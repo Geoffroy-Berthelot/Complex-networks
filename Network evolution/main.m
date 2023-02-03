@@ -1,7 +1,3 @@
-%VERIFIER SI  ADJM == 0 dans la matrice d'adjacence j'ai un doute
-%voir fichiers pick_random.... etc.
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Main file for simulating the transport in complex and lattices networks.
 %
@@ -10,8 +6,8 @@
 % (ii) Berthelot, G., Tupikina, L., Kang, MY. et al. Pseudo-Darwinian evolution of physical flows in complex networks. Sci Rep 10, 15477 (2020). https://doi.org/10.1038/s41598-020-72379-8
 %
 % This program:
-% - Uses full matrices only, not sparse
-% - Do not use Matlab graph functions
+% - Uses full matrices only
+% - Does not use Matlab graph functions
 % 
 % The simulation stops for 4 conditions:
 % (i) no path exists between the source and the drain (i.e. the source and drain are disconnected)
