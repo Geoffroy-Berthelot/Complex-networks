@@ -69,10 +69,12 @@ Which results in the following figure (Fig. 1):
 |:--:| 
 | Fig. 1: Example of simulations for scale-free networks, using the random and pseudo-darwinian evolutions. |
 
+<p align="center">
 <figure>
     <img src="../images/CN_Fig0.png" style="width: 60%;">
 	<figcaption>Fig. 1: Example of simulations for scale-free networks, using the random and pseudo-darwinian evolutions.</figcaption>
 </figure>
+</p>
 
 A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice, Fig. 2). For lattice topologies with high dimensions, we use the properties of the adjacency matrix.
 
