@@ -69,7 +69,7 @@ Which results in the following figure (Fig. 1):
 |:--:| 
 | Fig. 1: Example of simulations for scale-free networks, using the random and pseudo-darwinian evolutions. |
 
-<div style="width: 100%;">
+<div style="width: 80%;">
     <img src="../images/CN_Fig0.png" style="width: 100%;" alt="Click to see the source">
 </div>
 
