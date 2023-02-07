@@ -4,13 +4,14 @@ function [F, M, is_warning] = get_flow(netw, is_mex)
 % using the built-in L = laplacian(G) function. However, for small networks
 % (i.e. N0 < 1600), this code seems faster.
 % This needs further investigations for assessing runtime differences.
+% Also, handling warnings is a much faster way to proceed than computing the 
+% determinant / rank of the adjacency matrix before solving P\S.
 
 %Handle warnings:
 is_warning = 0;
 lastwarn('') % Clear last warning message
 
 %Preallocs:
-%sized = sum(any(netw.adjm,2));
 sized = size(netw.adjm,1);
 
 if(is_mex)
