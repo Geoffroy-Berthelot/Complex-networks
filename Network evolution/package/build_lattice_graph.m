@@ -221,9 +221,6 @@ if(PC == 1)
         diagVec = diagVec(1:trim_points(i)); %trim trailing zeros
         adj = adj + diag(diagVec, start_points(i)-1);
     end
-    
-    %tester si tous les noeuds ont bien 2D liens pour dimensions 3,4,5,6 et
-    %N0=5 (ou 4)
 end
 
 %then copy triu to tril:
