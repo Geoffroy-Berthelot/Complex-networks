@@ -65,12 +65,13 @@ legend(hhh, 'random', 'pseudo-darwinian');
 
 Which results in the following figure (Fig. 1):
 
-| ![Image of simulations for complex networks](../images/CN_Fig0.png) |
+| ![Results for the simulations of complex networks](../images/CN_Fig0.png) |
 |:--:| 
-| Fig. 1: Example of simulations for scale-free networks, using the random and pseudo-darwinian evolution |
+| Fig. 1: Example of simulations for scale-free networks, using the random and pseudo-darwinian evolutions. |
 
+A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice, Fig. 2). For lattice topologies with high dimensions, we use the properties of the adjacency matrix.
 
-
-
-A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice, Fig. 2).  
+| ![Example of network realizations with different topologies](../images/CN_Fig1.png) |
+|:--:| 
+| Fig. 2: Example of network realizations with scale-free and lattice (open boundaries) topologies. |
 
