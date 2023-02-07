@@ -63,9 +63,14 @@ ylabel('Q / Q_0');
 legend(hhh, 'random', 'pseudo-darwinian');
 ```
 
-Which results in the following figure:
+Which results in the following figure (Fig. 1):
 
-![This is an image](../images/CN_Fig0.png)
+| ![Image of simulations for complex networks](../images/CN_Fig0.png) |
+|:--:| 
+| Fig. 1: Example of simulations for scale-free networks, using the random and pseudo-darwinian evolution |
 
-A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice), 
+
+
+
+A number of parameters can be changed in the 'main.m' file, including the topology of the network (scale-free or lattice, Fig. 2).  
 
