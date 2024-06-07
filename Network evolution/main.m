@@ -16,7 +16,7 @@
 % from the rest of the network containing the source and drain.
 % (iv) the flux is 0
 %
-% Copyright (C) <2023>  Geoffroy Berthelot, Min-Yeong Kang, Liubov
+% Copyright (C) <2023> Geoffroy Berthelot, Min-Yeong Kang, Liubov
 % Tupikina, Denis Grebenkov, Bernard Sapoval
 %
 % This program is free software: you can redistribute it and/or modify
