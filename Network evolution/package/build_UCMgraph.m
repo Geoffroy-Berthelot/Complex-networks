@@ -36,7 +36,7 @@ function cnet = wire(cnet)
 % Wire the corresponding cnet using cm_net from MIT/CNM toolboxes.
 % but cnet.adjm = cm_net(cnet.degree); is very slow
 % Self and multiple connexions are not allowed in this configuration.
-cnet.adjm = randomGraphFromDegreeSequence(cnet.degree');
+cnet.adjm = graph_from_degree_sequence(cnet.degree');
 
 function r = get_degree(gamma, n_nodes)
 % Generate degree network with probability 1,
@@ -47,7 +47,7 @@ function r = get_degree(gamma, n_nodes)
 % Suggest to round according to: d = floor(1/2*(1-r).^(-1/(1-alpha)) + 1/2);
 
 a = 2; %a = m in the article
-b = sqrt(n_nodes);
+b = n_nodes-1; %maximum number of nodes is one node connected to all other nodes to the exception of itself
 
 %1) Normalisation coefficient C:
 %C_{a,b,\gamma}= \sum_{i=a}^b i^{-\gamma}:
