@@ -10,9 +10,7 @@ Please refer to the following articles for more information:
 ## Usage
 The usage is straight-forward:
 1. modify the parameters in the 'main.m' file, and run it. The simulation will proceed and the results will be dumped in the /results folder.
-2. once you have your results ready, you can then run the 'build_results.m' file* to build a MATLAB structure 'RES' (which is dumped as 'RES.mat' in the root directory). 
-
-
+2. once you have your results ready, you can then run the 'build_results.m' file* to build a MATLAB structure 'RES' (which is dumped as 'RES.mat' in the root directory).__
 (*) make sure to remove the 'dummy.txt' file in the results/ folder (it is here for maintaining the /results folder in GitHub only)
 
 This structure contains the following fields:
