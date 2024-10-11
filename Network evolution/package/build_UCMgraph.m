@@ -60,6 +60,10 @@ r(1) = 1; %to make sure that sum(r) is odd at first.
 while(mod(sum(r), 2) ~= 0) %to ensure an even sum.
 
     r = rand(n_nodes, 1);   %draw uniform random U_j
+
+    % first, assign r = 1 to 'b' values (if any).
+    r(r == 1) = b;
+
     for k = a:b
         %[\sum_{i=a}^{k-1} i^{-\gamma}/C_{a,b,\gamma}
         %will return 0 if k==a
@@ -69,8 +73,9 @@ while(mod(sum(r), 2) ~= 0) %to ensure an even sum.
         
         %Find the ones who fall into the [B1, B2[ interval:
         %and assign k to these values:
-        r(B1 <= r & r < B2) = k;        
+        r(B1 <= r & r < B2) = k;
     end
+
 end
 
 function c = check_perfect_square(n_nodes)
